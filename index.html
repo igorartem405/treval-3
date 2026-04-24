@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Қазақстан саяхат әлемі</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        .note-card {background: #ffffff;border-left: 5px solid #007bff; /* Көк түсті сызық */border-radius: 10px;box-shadow: 0 4px 15px rgba(0,0,0,0.05);transition: 0.3s;}.note-card:hover {transform: scale(1.02);box-shadow: 0 6px 20px rgba(0,0,0,0.1);}
+        :root { --main-bg: #95ffd6; --card-bg: #7bbfff; --primary-color: #007bff; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--main-bg); color: #333; scroll-behavior: smooth; }
+        .hero { padding: 150px 0; text-align: center; background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://img.freepik.com/free-photo/globe-tourist-supplies-map_23-2147732540.jpg?semt=ais_hybrid&w=740&q=80'); background-size: cover;background-position: center;color: rgb(255, 255, 255);}
+        .card { border: 1px solid #00b5bb; border-radius: 15px; transition: 0.3s; background: var(--card-bg); height: 100%; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card-img-top { height: 200px; object-fit: cover; border-radius: 15px 15px 0 0; background: #e9ecef; }
+        .price-badge { color: #28a745; font-weight: bold; font-size: 1.2rem; }
+        .time-badge { color: #007bff; font-weight: 500; }
+        #detail-page { display: none; padding-top: 50px; }
+        .back-btn { cursor: pointer; color: var(--primary-color); font-weight: bold; margin-bottom: 20px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<!-- БАСТЫ БЕТ -->
+<div id="main-page">
+    <header class="hero">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Қазақстанның көрікті жерлері</h1>
+            <p class="lead text-muted">Ең танымал  туристік бағыт, бағалары мен бағдарламалары</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row g-4" id="places-grid">
+            <!-- Жерлер осында JS арқылы шығады -->
+        </div>
+    </div>
+</div>
+
+<!-- ТОЛЫҒЫРАҚ ПАРАҚШАСЫ -->
+<div id="detail-page" class="container">
+    <div class="back-btn" onclick="showMain()">← Артқа қайту</div>
+    <div class="row">
+        <div class="col-lg-7">
+            <img src="" id="detail-img" class="w-100 rounded-4 shadow-sm mb-4" style="height: 400px; object-fit: cover;">
+            <h1 id="detail-title" class="fw-bold"></h1>
+            <p id="detail-desc" class="lead mt-3"></p>
+            <h4 class="fw-bold mt-4">Бағдарламада не бар:</h4>
+            <ul id="detail-list"></ul>
+        </div>
+        <div class="col-lg-5">
+            <div class="p-4 border rounded-4 shadow-sm bg-light">
+                <h5 class="text-muted">Саяхат бағасы:</h5>
+                <div id="detail-price" class="price-badge mb-3" style="font-size: 2rem;"></div>
+                <hr>
+                <h5 class="text-muted">Қажетті уақыт:</h5>
+                <div id="detail-time" class="time-badge mb-4" style="font-size: 1.3rem;"></div>
+                <button class="btn btn-primary btn-lg w-100 fw-bold rounded-pill">Брондау</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="py-5 text-center mt-5 border-top bg-white">
+    <div class="container">
+        <!-- Техникалық қолдау бөлімі -->
+        <div class="mb-4">
+            <h5 class="fw-bold mb-3">Техникалық қолдау (Support):</h5>
+            <div class="d-flex justify-content-center align-items-center gap-3">
+                <a href="tel:+77071234567" class="text-decoration-none text-dark fw-bold">
+                    <span style="color: #007bff;">📞</span> +7 (707) 123-45-67
+                </a>
+                <span class="text-muted">|</span>
+                <a href="https://wa.me" target="_blank" class="text-decoration-none text-success fw-bold">
+                    <span>💬</span> WhatsApp-қа жазу
+                </a>
+            </div>
+            <p class="text-muted small mt-2">Жұмыс уақыты: 09:00 - 20:00 (Дс-Жм)</p>
+        </div>
+
+        <p class="text-muted mb-0">© 2024 Explore Kazakhstan. Барлық құқықтар қорғалған.</p>
+    </div>
+</footer>
+
+
+<script>
+// МӘЛІМЕТТЕР ҚОРЫ (15 ЖЕР)
+const places = [
+    { id: 1, title: "Каспий теңізі", desc: "Ақтау қаласының жағалауы, мөлдір су мен жартасты соқпақтар.", price: "45 000 ₸", time: "3 күн", img: "https://cdn2.tu-tu.ru/image/pagetree_node_data/1/31a73fd8d3d70444554881d7d4a118fa/", program: ["Жағажайда демалу", "Яхтамен серуен", "Жартасты соқпаққа экскурсия"] },
+    { id: 2, title: "Бектау-ата", desc: "Балқаш маңындағы жұмбақ гранитті таулар мен үңгірлер.", price: "15 000 ₸", time: "1 күн", img: "https://cs11.livemaster.ru/storage/topicavatar/600x450/98/df/68e2595f270f9430dda66dfc213b9e585d8454.jpeg?h=wxcokllU9JvjxX5Jf0Bkpw", program: ["Әулиетас үңгірі", "Тауға шығу", "Фотосессия"] },
+    { id: 3, title: "Шарын шатқалы", desc: "Атақты «Қамалдар аңғары» мен қызыл жартастар.", price: "12 000 ₸", time: "1 күн", img: "https://kaz.tengrinews.kz/userdata/map/381bd32b988480c9612811b60917ef7f.jpeg", program: ["Эко-соқпақпен серуен", "Шарын өзеніне бару", "Панорамалық суреттер"] },
+    { id: 4, title: "Бурабай", desc: "Қарағайлы ормандар мен таза көлдер мекені.", price: "25 000 ₸", time: "2 күн", img: "https://tengrinews.kz/userdata/news/2024/news_539037/thumb_m/photo_476312.jpeg", program: ["Оқжетпес шыңы", "Жұмбақтас", "Абылай хан алаңы"] },
+    { id: 5, title: "Көлсай көлдері", desc: "Тянь-Шань тауларындағы «Көк меруерттер».", price: "18 000 ₸", time: "2 күн", img: "https://tekelinews.kz/uploads/news/1221/news1221.jpg", program: ["Көл жағасында серуен", "Қайықпен жүзу", "Атпен серуен"] },
+    { id: 6, title: "Түркістан", desc: "Ежелгі Ясауи кесенесі мен Керуен-сарай.", price: "30 000 ₸", time: "2 күн", img: "https://yassy-tur.kz/wp-content/uploads/2022/04/1648810980-0696af5572db94e539d66e76b5ba468f-scaled.jpg", program: ["Кесенеге бару", "Керуен-сарай шоуы", "Ескі шаһар туры"] },
+    { id: 7, title: "Шымбұлақ", desc: "Биік таулы заманауи курорт.", price: "10 000 ₸", time: "6 сағат", img: "https://arendacar.kz/wp-content/uploads/sites/16/2025/09/MxHIGphG.jpg", program: ["Аспалы жол", "Тау панорамасы", "Медеу мұзайдыны"] },
+    { id: 8, title: "Баянауыл", desc: "Павлодар облысындағы табиғат мұражайы.", price: "20 000 ₸", time: "2 күн", img: "https://pavlodarnews.kz/uploads/images/202308/image_750x_64c880d0e958b.jpg", program: ["Жасыбай көлі", "Кемпіртас жартасы", "Қоңыр әулие үңгірі"] },
+    { id: 9, title: "Алтын-Емел", desc: "Әнші бархан мен түрлі-түсті таулар.", price: "28 000 ₸", time: "2 күн", img: "https://trekkingshop.kz/image/catalog/articles/altynemel/altyn_emel_panorama.jpeg", program: ["Әнші барханда сырғу", "Ақтау таулары", "Қатутау"] },
+    { id: 10, title: "Қайыңды көлі", desc: "Су астындағы қайың орманы.", price: "15 000 ₸", time: "1 күн", img: "https://tekelinews.kz/uploads/news/1221/news1221.jpg", program: ["Көлді көру", "Орман аралау", "Пикник"] },
+    { id: 11, title: "Үлкен Алматы көлі", desc: "Биік таудағы көгілдір жауһар.", price: "8 000 ₸", time: "5 сағат", img: "https://massaget.kz/userdata/news/news_49307/image_l.jpg", program: ["Обсерватория", "Көл көрінісі", "Таза ауа"] },
+    { id: 12, title: "Рахман қайнарлары", desc: "Шығыстағы шипалы бұлақтар.", price: "55 000 ₸", time: "3 күн", img: "https://oimaqnews.kz/storage/resized-images/2024/08/1724910486.png", program: ["Емдік ванналар", "Алтай таулары", "Рахман көлі"] },
+    { id: 13, title: "Мұзтау (Белуха)", desc: "Алтайдың ең биік нүктесі.", price: "70 000 ₸", time: "5 күн", img: "https://anyz.pushkinlibrary.kz/wp-content/uploads/2023/11/Belukha-1024x768.jpg", program: ["Треккинг", "Шыңды көру", "Көктөл бағдарламасы"] },
+    { id: 14, title: "Марқакөл", desc: "Шығыс Қазақстандағы ең таза көл.", price: "40 000 ₸", time: "3 күн", img: "https://markakol-zapovednik.kz/images-new/2/2.jpg", program: ["Қорықты аралау", "Балық аулау (рұқсатпен)", "Табиғатты бақылау"] },
+    
+];
+
+// КАРТОЧКАЛАРДЫ ШЫҒАРУ
+const grid = document.getElementById('places-grid');
+places.forEach(place => {
+    grid.innerHTML += `
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="${place.img || 'https://placeholder.com'}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="fw-bold">${place.title}</h5>
+                    <p class="text-muted small">${place.desc}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="price-badge">${place.price}</span>
+                        <button class="btn btn-outline-primary btn-sm px-3 rounded-pill" onclick="showDetail(${place.id})">Толығырақ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+});
+
+// ФУНКЦИЯЛАР
+function showDetail(id) {
+    const place = places.find(p => p.id === id);
+    document.getElementById('main-page').style.display = 'none';
+    document.getElementById('detail-page').style.display = 'block';
+    
+    document.getElementById('detail-title').innerText = place.title;
+    document.getElementById('detail-desc').innerText = place.desc;
+    document.getElementById('detail-price').innerText = place.price;
+    document.getElementById('detail-time').innerText = place.time;
+    document.getElementById('detail-img').src = place.img || 'https://placeholder.com';
+    
+    const list = document.getElementById('detail-list');
+    list.innerHTML = '';
+    place.program.forEach(item => {
+        list.innerHTML += `<li>${item}</li>`;
+    });
+    window.scrollTo(0, 0);
+}
+
+function showMain() {
+    document.getElementById('main-page').style.display = 'block';
+    document.getElementById('detail-page').style.display = 'none';
+}
+</script>
+
+<!-- ТОЛЬКО НИЖНЯЯ ЧАСТЬ (ФУТЕР) -->
+<footer class="custom-footer mt-5 pt-5 pb-4">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Ауа райы -->
+            <div class="col-12 col-md-4">
+                <div class="footer-card">
+                    <h6 class="footer-label text-info">АУА РАЙЫ</h6>
+                    <div class="d-flex align-items-center text-white">
+                        <div class="display-6 me-3"><span id="f-temp">15</span>°C</div>
+                        <div>
+                            <div class="fw-bold">Алматы</div>
+                            <div class="small opacity-75">Жеңіл жаңбыр</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Валюта -->
+            <div class="col-12 col-md-4">
+                <div class="footer-card">
+                    <h6 class="footer-label text-success">ВАЛЮТА (KZT)</h6>
+                    <div class="d-flex justify-content-between text-white small mb-1"><span>USD</span> <b>461.4</b></div>
+                    <div class="d-flex justify-content-between text-white small mb-1"><span>EUR</span> <b>542.2</b></div>
+                    <div class="d-flex justify-content-between text-white small"><span>RUB</span> <b>6.1</b></div>
+                </div>
+            </div>
+
+            <!-- Жаңалықтар -->
+            <div class="col-12 col-md-4">
+                <div class="footer-card text-white">
+                    <h6 class="footer-label text-warning">ЖАҢАЛЫҚТАР</h6>
+                    <marquee direction="up" scrollamount="2" style="height: 50px;">
+                        <p class="small mb-2">🇰🇿 Туризмді дамытудың жаңа жоспары</p>
+                        <p class="small mb-0">✈️ Жаңа авиарейстер ашылды</p>
+                    </marquee>
+                </div>
+            </div>
+        </div>
+        <p class="text-center mt-4 opacity-50 small text-white">&copy; 2026 Барлық құқықтар қорғалған</p>
+    </div>
+
+    <!-- СТИЛИ ТОЛЬКО ДЛЯ ЭТОГО БЛОКА -->
+    <style>
+        .custom-footer {
+            background-color: #00ffeaf3 !important; /* ТЕМНЫЙ ФОН ТОЛЬКО ТУТ */
+            margin: 0;
+            width: 100%;
+        }
+        .footer-card {
+            background: rgb(0, 170, 147);
+            border: 1px solid rgb(0, 255, 170);
+            border-radius: 15px;
+            padding: 20px;
+        }
+        .footer-label { font-size: 0.7rem; letter-spacing: 1px; font-weight: 800; margin-bottom: 12px; }
+    </style>
+</footer>
+
+</body>
+
+</html>
